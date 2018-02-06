@@ -142,7 +142,7 @@ public class Book extends EntityBase implements IView
 			{
 				Properties whereClause = new Properties();
 				whereClause.setProperty("bookId",
-				persistentState.getProperty("bookId"));
+						persistentState.getProperty("bookId"));
 				updatePersistentState(mySchema, persistentState, whereClause);
 				updateStatusMessage = "Book data for book ID : "
                         + persistentState.getProperty("bookId")
@@ -162,13 +162,11 @@ public class Book extends EntityBase implements IView
 		{
 			updateStatusMessage = "Error inserting book data into database!";
 		}
-		//DEBUG System.out.println("updateStateInDatabase " + updateStatusMessage);
 	}
 
 
 	/**
 	 * This method is needed solely to enable the Book information to be displayable in a table
-	 *
 	 */
 	//--------------------------------------------------------------------------
 	public Vector<String> getEntryListView()

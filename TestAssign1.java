@@ -306,28 +306,21 @@ public class TestAssign1 {
     private static void runTestScript() {
 
         System.out.println("Test Script initiate");
-        Properties p = new Properties();
-        p.setProperty("title", "Fake Book Title");
-        p.setProperty("author", "Fake Author Name");
-        p.setProperty("pubYear", "2018");
-        p.setProperty("status", "active");
-        Book b = new Book(p);
-        b.update();
-        System.out.println("Test book added, search for book");
-        System.out.println("End Test script");
+        for (int i = 1; i < 20; i ++) {
+            createBook(i);
+            createPatron(i);
+        }
+        findBooksNewerThan("1970");
+        findBooksOlderThan("1970");
         continueMenu();
     }
     // Create book and patron method for testing
     private static void createBook(int count) {
         Properties props = new Properties();
-        System.out.print("Book Author: ");
         props.setProperty("author", "Name " + count);
-        System.out.print("Book Title: ");
         props.setProperty("title", "Title " + count);
-        System.out.print("Publication year (yyyy): ");
-        int year = 1950 + count;
+        int year = 1950 + count*3;
         props.setProperty("pubYear", String.valueOf(year));
-        System.out.print("Status (active/inactive): ");
         props.setProperty("status", "active");
         Book newBook = new Book(props);
         newBook.update();
@@ -335,22 +328,15 @@ public class TestAssign1 {
 
     private static void createPatron(int count) {
         Properties props = new Properties();
-        System.out.println("Name of Patron: ");
         props.setProperty("name", "FName LName" + count);
-        System.out.println("Address: ");
         int address = 1 + count;
         props.setProperty("address", String.valueOf(address) + " Evergreen Terrace");
-        System.out.println("City: ");
-        props.setProperty("city", "City " + count);
-        System.out.println("State code: ");
+        props.setProperty("city", "City" + count);
         props.setProperty("stateCode", "NY");
-        System.out.println("Zip code: ");
         int zip = 14400 + count;
         props.setProperty("zip", String.valueOf(zip));
-        System.out.println("Email Address: ");
         props.setProperty("email", "email" + count + "@gmail.com");
-        System.out.println("Date of Birth(yyyy-mm-dd): ");
-        int year = 1950 + count;
+        int year = 1950 + count*2;
         props.setProperty("dateOfBirth", String.valueOf(year)+"-01-01");
         props.setProperty("status", "active");
         Patron newPatron = new Patron(props);
@@ -359,7 +345,7 @@ public class TestAssign1 {
 
     // Find book methods using input from method
     private static void findBooksOlderThan(String input){
-        System.out.print("Date to search before: " + input);
+        System.out.println("Date to search before: " + input);
         System.out.println("Results: ");
         BookCollection bookCol = new BookCollection();
         Vector<Book> books = bookCol.findBooksOlderThanDate(input);
@@ -368,7 +354,7 @@ public class TestAssign1 {
         }
     }
     private static void findBooksNewerThan(String input){
-        System.out.print("Date to search after: " + input);
+        System.out.println("Date to search after: " + input);
         System.out.println("Results: ");
         BookCollection bookCol = new BookCollection();
         Vector<Book> books = bookCol.findBooksNewerThanDate(input);
@@ -386,7 +372,7 @@ public class TestAssign1 {
         }
     }
     private static void findBooksWithAuthorLike(String input){
-        System.out.print("Author's Name: " + input);
+        System.out.println("Author's Name: " + input);
         System.out.println("Results: ");
         BookCollection bookCol = new BookCollection();
         Vector<Book> books = bookCol.findBooksWithAuthorLike(input);
@@ -397,7 +383,7 @@ public class TestAssign1 {
 
     // Find patron methods using input from method
     private static void findPatronsOlderThan(String input){
-        System.out.print("Date to search before: " + input);
+        System.out.println("Date to search before: " + input);
         System.out.println("Results: ");
         PatronCollection patronCol = new PatronCollection();
         Vector<Patron> patrons = patronCol.findPatronsOlderThan(input);
@@ -406,7 +392,7 @@ public class TestAssign1 {
         }
     }
     private static void findPatronsYoungerThan(String input){
-        System.out.print("Date to search after: " + input);
+        System.out.println("Date to search after: " + input);
         System.out.println("Results: ");
         PatronCollection patronCol = new PatronCollection();
         Vector<Patron> patrons = patronCol.findPatronsYoungerThan(input);
@@ -415,7 +401,7 @@ public class TestAssign1 {
         }
     }
     private static void findPatronsInZip(String input){
-        System.out.print("ZIP Code: " + input);
+        System.out.println("ZIP Code: " + input);
         System.out.println("Results: ");
         PatronCollection patronCol = new PatronCollection();
         Vector<Patron> patrons = patronCol.findPatronsAtZipCode(input);
@@ -424,7 +410,7 @@ public class TestAssign1 {
         }
     }
     private static void findPatronsNameLike(String input){
-        System.out.print("Patron name: " + input);
+        System.out.println("Patron name: " + input);
         System.out.println("Results: ");
         PatronCollection patronCol = new PatronCollection();
         Vector<Patron> patrons = patronCol.findPatronsWithNameLike(input);

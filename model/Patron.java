@@ -21,7 +21,7 @@ import userinterface.View;
 //==============================================================
 public class Patron extends EntityBase implements IView
 {
-	private static final String myTableName = "Account";
+	private static final String myTableName = "Patron";
 
 	protected Properties dependencies;
 
@@ -153,14 +153,17 @@ public class Patron extends EntityBase implements IView
 				whereClause.setProperty("patronId",
 						persistentState.getProperty("patronId"));
 				updatePersistentState(mySchema, persistentState, whereClause);
-				updateStatusMessage = "Patron data for patronId : " + persistentState.getProperty("PatronId") + " updated successfully in database!";
+				updateStatusMessage = "Patron data for patronId : "
+						+ persistentState.getProperty("PatronId")
+						+ " updated successfully in database!";
 			}
 			else
 			{
 				Integer patronId =
 						insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("PatronId", "" + patronId.intValue());
-				updateStatusMessage = "Patron data for new patron : " +  persistentState.getProperty("PatronId")
+				persistentState.setProperty("PatronId", "" + patronId);
+				updateStatusMessage = "Patron data for new patron : "
+						+  persistentState.getProperty("PatronId")
 						+ "installed successfully in database!";
 			}
 		}
@@ -168,28 +171,26 @@ public class Patron extends EntityBase implements IView
 		{
 			updateStatusMessage = "Error inserting patron data in database!";
 		}
-		//DEBUG System.out.println("updateStateInDatabase " + updateStatusMessage);
 	}
 
 
 	/**
 	 * This method is needed solely to enable the Patron information to be displayable in a table
-	 *
 	 */
 	//--------------------------------------------------------------------------
 	public Vector<String> getEntryListView()
 	{
 		Vector<String> v = new Vector<String>();
 
-		v.addElement(persistentState.getProperty("PatronId"));
-		v.addElement(persistentState.getProperty("Name"));
-		v.addElement(persistentState.getProperty("Address"));
-		v.addElement(persistentState.getProperty("City"));
-		v.addElement(persistentState.getProperty("StateCode"));
-		v.addElement(persistentState.getProperty("Zip"));
-		v.addElement(persistentState.getProperty("Email"));
-		v.addElement(persistentState.getProperty("DateOfBirth"));
-		v.addElement(persistentState.getProperty("Status"));
+		v.addElement(persistentState.getProperty("patronId"));
+		v.addElement(persistentState.getProperty("name"));
+		v.addElement(persistentState.getProperty("address"));
+		v.addElement(persistentState.getProperty("city"));
+		v.addElement(persistentState.getProperty("stateCode"));
+		v.addElement(persistentState.getProperty("zip"));
+		v.addElement(persistentState.getProperty("email"));
+		v.addElement(persistentState.getProperty("dateOfBirth"));
+		v.addElement(persistentState.getProperty("status"));
 
 		return v;
 	}
