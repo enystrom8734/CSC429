@@ -43,7 +43,7 @@ public class PatronCollection extends EntityBase implements IView
 	}
 
 	public Vector findPatronsAtZipCode(String zip) {
-		String query = "SELECT * FROM " + myTableName + "WHERE (zipcode = " + zip + ") ORDER BY name ASC;";
+		String query = "SELECT * FROM " + myTableName + "WHERE (zip = " + zip + ") ORDER BY name ASC;";
 		return doQuery(query);
 	}
 

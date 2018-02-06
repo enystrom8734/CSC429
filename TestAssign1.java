@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import model.Book;
 import model.BookCollection;
-//import model.PatronCollection;
-//import model.Patron;
+import model.PatronCollection;
+import model.Patron;
 
 public class TestAssign1 {
 
