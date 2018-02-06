@@ -8,7 +8,6 @@ import model.PatronCollection;
 import model.Patron;
 
 public class TestAssign1 {
-
     private static Scanner scan = new Scanner(System.in).useDelimiter("\n");
 
     public static void main(String args[]){
@@ -64,7 +63,7 @@ public class TestAssign1 {
                 createBook();
                 break;
             case 2:
-//                createPatronPrompt();
+                createPatron();
                 break;
             default:
                 mainMenu();
@@ -134,16 +133,16 @@ public class TestAssign1 {
         int i = scan.nextInt();
         switch(i){
             case 1:
-                findPatronOlderThan();
+                findPatronsOlderThan();
                 break;
             case 2:
-                findPatronNewerThan();
+                findPatronsNewerThan();
                 break;
             case 3:
-                findPatronInZip();
+                findPatronsInZip();
                 break;
             case 4:
-                findPatronNameLike();
+                findPatronsNameLike();
                 break;
             case 5:
                 findMenu();
@@ -215,7 +214,7 @@ public class TestAssign1 {
     }
 
     // Find patron methods
-    private static void findPatronOlderThan(){
+    private static void findPatronsOlderThan(){
         String input;
         System.out.print("Date to search before: ");
         input = scan.next();
@@ -223,7 +222,7 @@ public class TestAssign1 {
         continueMenu();
 
     }
-    private static void findPatronNewerThan(){
+    private static void findPatronsNewerThan(){
         String input;
         System.out.print("Date to search after: ");
         input = scan.next();
@@ -231,7 +230,7 @@ public class TestAssign1 {
         continueMenu();
 
     }
-    private static void findPatronInZip(){
+    private static void findPatronsInZip(){
         String input;
         System.out.print("ZIP Code: ");
         input = scan.next();
@@ -239,7 +238,7 @@ public class TestAssign1 {
         continueMenu();
 
     }
-    private static void findPatronNameLike(){
+    private static void findPatronsNameLike(){
         String input;
         System.out.print("Patron name: ");
         input = scan.next();
@@ -271,71 +270,166 @@ public class TestAssign1 {
     }
 
     private static void createPatron(){
-        String s = "";
-        Properties p = new Properties();
+        String input = "";
+        Properties props = new Properties();
         System.out.println("Name of Patron: ");
-        s = scan.next();
-        p.setProperty("name", s);
+        input = scan.next();
+        props.setProperty("name", input);
         System.out.println("Address: ");
-        s = scan.next();
-        p.setProperty("address", s);
+        input = scan.next();
+        props.setProperty("address", input);
         System.out.println("City: ");
-        s = scan.next();
-        p.setProperty("city", s);
+        input = scan.next();
+        props.setProperty("city", input);
         System.out.println("State code: ");
-        s = scan.next();
-        p.setProperty("stateCode", s);
+        input = scan.next();
+        props.setProperty("stateCode", input);
         System.out.println("Zip code: ");
-        s = scan.next();
-        p.setProperty("zip", s);
+        input = scan.next();
+        props.setProperty("zip", input);
         System.out.println("Email Address: ");
-        s = scan.next();
-        p.setProperty("email", s);
+        input = scan.next();
+        props.setProperty("email", input);
         System.out.println("Date of Birth(yyyy-mm-dd): ");
-        s = scan.next();
-        p.setProperty("dateOfBirth", s);
-        p.setProperty("status", "new");
-        Patron pat = new Patron(p);
-        pat.update();
+        input = scan.next();
+        props.setProperty("dateOfBirth", input);
+        System.out.print("Status (active/inactive): ");
+        input = scan.next();
+        props.setProperty("status", input);
+        Patron newPatron = new Patron(props);
+        newPatron.update();
         continueMenu();
 
     }
 
     // Test script to run the various commands without manually typing all options
-    private static void runTestScript(){
+    private static void runTestScript() {
 
         System.out.println("Test Script initiate");
         Properties p = new Properties();
-        //p.setProperty("bookID", "1011");
-        p.setProperty("title","manualinsert");
-        p.setProperty("author","fakename");
-        p.setProperty("pubYear","1976");
-        p.setProperty("status","new");
+        p.setProperty("title", "Fake Book Title");
+        p.setProperty("author", "Fake Author Name");
+        p.setProperty("pubYear", "2018");
+        p.setProperty("status", "active");
         Book b = new Book(p);
         b.update();
+        System.out.println("Test book added, search for book");
         System.out.println("End Test script");
         continueMenu();
-//        getPer();
+    }
+    // Create book and patron method for testing
+    private static void createBook(int count) {
+        Properties props = new Properties();
+        System.out.print("Book Author: ");
+        props.setProperty("author", "Name " + count);
+        System.out.print("Book Title: ");
+        props.setProperty("title", "Title " + count);
+        System.out.print("Publication year (yyyy): ");
+        int year = 1950 + count;
+        props.setProperty("pubYear", String.valueOf(year));
+        System.out.print("Status (active/inactive): ");
+        props.setProperty("status", "active");
+        Book newBook = new Book(props);
+        newBook.update();
+    }
 
-        // search for a book by a title like
-        // bc = new BookCollection("Title LIKE ", "apple");
+    private static void createPatron(int count) {
+        Properties props = new Properties();
+        System.out.println("Name of Patron: ");
+        props.setProperty("name", "FName LName" + count);
+        System.out.println("Address: ");
+        int address = 1 + count;
+        props.setProperty("address", String.valueOf(address) + " Evergreen Terrace");
+        System.out.println("City: ");
+        props.setProperty("city", "City " + count);
+        System.out.println("State code: ");
+        props.setProperty("stateCode", "NY");
+        System.out.println("Zip code: ");
+        int zip = 14400 + count;
+        props.setProperty("zip", String.valueOf(zip));
+        System.out.println("Email Address: ");
+        props.setProperty("email", "email" + count + "@gmail.com");
+        System.out.println("Date of Birth(yyyy-mm-dd): ");
+        int year = 1950 + count;
+        props.setProperty("dateOfBirth", String.valueOf(year)+"-01-01");
+        props.setProperty("status", "active");
+        Patron newPatron = new Patron(props);
+        newPatron.update();
+    }
 
-        // given a year, print all book data for books before that year
-        //   bc = new BookCollection("Date >= ", "2000-01-01");
+    // Find book methods using input from method
+    private static void findBooksOlderThan(String input){
+        System.out.print("Date to search before: " + input);
+        System.out.println("Results: ");
+        BookCollection bookCol = new BookCollection();
+        Vector<Book> books = bookCol.findBooksOlderThanDate(input);
+        for (Book book : books) {
+            System.out.println(book.getEntryListView());
+        }
+    }
+    private static void findBooksNewerThan(String input){
+        System.out.print("Date to search after: " + input);
+        System.out.println("Results: ");
+        BookCollection bookCol = new BookCollection();
+        Vector<Book> books = bookCol.findBooksNewerThanDate(input);
+        for (Book book : books) {
+            System.out.println(book.getEntryListView());
+        }
+    }
+    private static void findBooksWithTitleLike(String input){
+        System.out.print("Book Title: " + input);
+        System.out.println("Results: ");
+        BookCollection bookCol = new BookCollection();
+        Vector<Book> books = bookCol.findBooksWithTitleLike(input);
+        for (Book book : books) {
+            System.out.println(book.getEntryListView());
+        }
+    }
+    private static void findBooksWithAuthorLike(String input){
+        System.out.print("Author's Name: " + input);
+        System.out.println("Results: ");
+        BookCollection bookCol = new BookCollection();
+        Vector<Book> books = bookCol.findBooksWithAuthorLike(input);
+        for (Book book : books) {
+            System.out.println(book.getEntryListView());
+        }
+    }
 
-      /*
-      // given a date, print all patron data for patrons before that date
-      pc = new PatronCollection("Date > ", "1990-01-01");
-
-      // given a zip, print all patron data in that area
-      pc = new PatronCollection("Zip = ", "14534");
-
-      // given a bookid and dateOfTrans, show all transactions that relate
-      tc = new BookCollection("BookID = ", "1001') AND dateOfTrans >= ('2010-01-01");      //SELECT * FROM Transactions WHERE BookId =('1001') AND dateOfTrans >= ('2010-01-01');
-      */
-
-
-
-
+    // Find patron methods using input from method
+    private static void findPatronsOlderThan(String input){
+        System.out.print("Date to search before: " + input);
+        System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsOlderThan(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
+    }
+    private static void findPatronsYoungerThan(String input){
+        System.out.print("Date to search after: " + input);
+        System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsYoungerThan(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
+    }
+    private static void findPatronsInZip(String input){
+        System.out.print("ZIP Code: " + input);
+        System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsAtZipCode(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
+    }
+    private static void findPatronsNameLike(String input){
+        System.out.print("Patron name: " + input);
+        System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsWithNameLike(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
     }
 }
