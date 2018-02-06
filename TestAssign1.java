@@ -270,36 +270,36 @@ public class TestAssign1 {
 
     }
 
-    //    private static static void createPatronPrompt(){
-//        String s = "";
-//        Properties p = new Properties();
-//        System.out.println("Name of Patron: ");
-//        s = scan.next();
-//        p.setProperty("name", s);
-//        System.out.println("Address: ");
-//        s = scan.next();
-//        p.setProperty("address", s);
-//        System.out.println("City: ");
-//        s = scan.next();
-//        p.setProperty("city", s);
-//        System.out.println("State code: ");
-//        s = scan.next();
-//        p.setProperty("stateCode", s);
-//        System.out.println("Zip code: ");
-//        s = scan.next();
-//        p.setProperty("zip", s);
-//        System.out.println("Email Address: ");
-//        s = scan.next();
-//        p.setProperty("email", s);
-//        System.out.println("Date of Birth(yyyy-mm-dd): ");
-//        s = scan.next();
-//        p.setProperty("dateOfBirth", s);
-//        p.setProperty("status", "new");
-//        Patron pat = new Patron(p);
-//        pat.update();
-//    continueMenu();
+    private static void createPatron(){
+        String s = "";
+        Properties p = new Properties();
+        System.out.println("Name of Patron: ");
+        s = scan.next();
+        p.setProperty("name", s);
+        System.out.println("Address: ");
+        s = scan.next();
+        p.setProperty("address", s);
+        System.out.println("City: ");
+        s = scan.next();
+        p.setProperty("city", s);
+        System.out.println("State code: ");
+        s = scan.next();
+        p.setProperty("stateCode", s);
+        System.out.println("Zip code: ");
+        s = scan.next();
+        p.setProperty("zip", s);
+        System.out.println("Email Address: ");
+        s = scan.next();
+        p.setProperty("email", s);
+        System.out.println("Date of Birth(yyyy-mm-dd): ");
+        s = scan.next();
+        p.setProperty("dateOfBirth", s);
+        p.setProperty("status", "new");
+        Patron pat = new Patron(p);
+        pat.update();
+        continueMenu();
 
-//    }
+    }
 
     // Test script to run the various commands without manually typing all options
     private static void runTestScript(){
