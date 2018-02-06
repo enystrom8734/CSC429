@@ -219,6 +219,11 @@ public class TestAssign1 {
         System.out.print("Date to search before: ");
         input = scan.next();
         System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsOlderThan(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
         continueMenu();
 
     }
@@ -227,6 +232,11 @@ public class TestAssign1 {
         System.out.print("Date to search after: ");
         input = scan.next();
         System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsYoungerThan(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
         continueMenu();
 
     }
@@ -235,6 +245,11 @@ public class TestAssign1 {
         System.out.print("ZIP Code: ");
         input = scan.next();
         System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsAtZipCode(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
         continueMenu();
 
     }
@@ -243,6 +258,11 @@ public class TestAssign1 {
         System.out.print("Patron name: ");
         input = scan.next();
         System.out.println("Results: ");
+        PatronCollection patronCol = new PatronCollection();
+        Vector<Patron> patrons = patronCol.findPatronsWithNameLike(input);
+        for (Patron patron : patrons) {
+            System.out.println(patron.getEntryListView());
+        }
         continueMenu();
 
     }
@@ -310,7 +330,9 @@ public class TestAssign1 {
             createBook(i);
             createPatron(i);
         }
+        System.out.println("** Find books newer than 1970 **");
         findBooksNewerThan("1970");
+        System.out.println("** Find books older than 1970 **");
         findBooksOlderThan("1970");
         continueMenu();
     }
