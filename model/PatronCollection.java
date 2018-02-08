@@ -33,23 +33,23 @@ public class PatronCollection extends EntityBase implements IView
 	}
 
 	public Vector findPatronsOlderThan(String date) {
-		String query = "SELECT * FROM " + myTableName + " WHERE (dateOfBirth > " + date + ") ORDER BY name ASC;";
+		String query = "SELECT * FROM " + myTableName + " WHERE (dateOfBirth < " + date + ") ORDER BY name ASC;";
 		return doQuery(query);
 	}
 
 	public Vector findPatronsYoungerThan(String date) {
-		String query = "SELECT * FROM " + myTableName + "WHERE (dateOfBirth < " + date + ") ORDER BY name ASC;";
+		String query = "SELECT * FROM " + myTableName + " WHERE (dateOfBirth > " + date + ") ORDER BY name ASC;";
 		return doQuery(query);
 	}
 
 	public Vector findPatronsAtZipCode(String zip) {
-		String query = "SELECT * FROM " + myTableName + "WHERE (zip = " + zip + ") ORDER BY name ASC;";
+		String query = "SELECT * FROM " + myTableName + " WHERE (zip=" + zip + ") ORDER BY name ASC;";
 		return doQuery(query);
 	}
 
 	public Vector findPatronsWithNameLike(String name) {
 
-		String query = "SELECT * FROM " + myTableName + "WHERE (name LIKE '%" + name + "%') ORDER BY name ASC;";
+		String query = "SELECT * FROM " + myTableName + " WHERE (name LIKE '%" + name + "%') ORDER BY name ASC;";
 		return doQuery(query);
 	}
 
