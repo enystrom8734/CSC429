@@ -1,11 +1,9 @@
-
 // specify the package
 
 // system imports
 
 import event.Event;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import model.Librarian;
 import userinterface.MainStageContainer;
@@ -14,64 +12,50 @@ import userinterface.WindowPosition;
 // project imports
 
 
-/** The class containing the main program  for the ATM application */
+/**
+ * The class containing the main program  for the ATM application
+ */
 //==============================================================
-public class LibrarySystem extends Application
-{
-
-	private Librarian myLibrarian;		// the main behavior for the application
-
-	/** Main frame of the application */
-	private Stage mainStage;
+public class LibrarySystem extends Application {
 
 
-	// start method for this class, the main application object
-	//----------------------------------------------------------
-	public void start(Stage primaryStage)
-	{
-	   System.out.println("Library System v0.01");
-	   System.out.println("Cholla Grygotis and Erik Nystrom");
+    /**
+     * The "main" entry point for the application. Carries out actions to
+     * set up the application
+     */
+    //----------------------------------------------------------
+    public static void main(String[] args) {
 
-           // Create the top-level container (main frame) and add contents to it.
-	   MainStageContainer.setStage(primaryStage, "Brockport Library System v0.01");
-	   mainStage = MainStageContainer.getInstance();
+        launch(args);
+    }
 
-	   // Finish setting up the stage (ENABLE THE GUI TO BE CLOSED USING THE TOP RIGHT
-	   // 'X' IN THE WINDOW), and show it.
-           mainStage.setOnCloseRequest(new EventHandler <javafx.stage.WindowEvent>() {
-            @Override
-            public void handle(javafx.stage.WindowEvent event) {
-                System.exit(0);
-            }
-           });
+    // start method for this class, the main application object
+    //----------------------------------------------------------
+    public void start(Stage primaryStage) {
+        System.out.println("Library System v0.01");
+        System.out.println("Cholla Grygotis and Erik Nystrom");
 
-           try
-	   {
-		myLibrarian = new Librarian();
-	   }
-	   catch(Exception exc)
-	   {
-		System.err.println("Could not create Librarian!");
-		new Event(Event.getLeafLevelClassName(this), "LibrarySystem.<init>", "Unable to create Librarian object", Event.ERROR);
-		exc.printStackTrace();
-	   }
+        // Create the top-level container (main frame) and add contents to it.
+        MainStageContainer.setStage(primaryStage, "Brockport Library System v0.01");
+        // Main frame of the application
+        Stage mainStage = MainStageContainer.getInstance();
 
+        // Finish setting up the stage (ENABLE THE GUI TO BE CLOSED USING THE TOP RIGHT
+        // 'X' IN THE WINDOW), and show it.
+        mainStage.setOnCloseRequest(event -> System.exit(0));
 
-  	   WindowPosition.placeCenter(mainStage);
-
-           mainStage.show();
-	}
+        try {
+            new Librarian();
+        } catch (Exception exc) {
+            System.err.println("Could not create Librarian!");
+            new Event(Event.getLeafLevelClassName(this), "LibrarySystem.<init>", "Unable to create Librarian object", Event.ERROR);
+            exc.printStackTrace();
+        }
 
 
-	/** 
-	 * The "main" entry point for the application. Carries out actions to
-	 * set up the application
-	 */
-	//----------------------------------------------------------
-    	public static void main(String[] args)
-	{
+        WindowPosition.placeCenter(mainStage);
 
-		launch(args);
-	}
+        mainStage.show();
+    }
 
 }
