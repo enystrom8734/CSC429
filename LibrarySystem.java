@@ -5,6 +5,7 @@
 import event.Event;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Librarian;
 import userinterface.MainStageContainer;
 import userinterface.WindowPosition;
@@ -43,6 +44,7 @@ public class LibrarySystem extends Application {
         // Finish setting up the stage (ENABLE THE GUI TO BE CLOSED USING THE TOP RIGHT
         // 'X' IN THE WINDOW), and show it.
         mainStage.setOnCloseRequest(event -> System.exit(0));
+        mainStage.initStyle(StageStyle.UTILITY);
 
         try {
             new Librarian();
