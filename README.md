@@ -1,7 +1,7 @@
-#CSC 429: Object-Oriented Software Development
-##Pair Programming 1: Database access from Java
-###Department of Computing Sciences
-###The College at Brockport, Brockport, NY 
+# CSC 429: Object-Oriented Software Development
+## Pair Programming 1: Database access from Java
+### Department of Computing Sciences
+### The College at Brockport, Brockport, NY 
 
 Due Date: 02/06/2018
 
