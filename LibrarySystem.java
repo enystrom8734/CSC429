@@ -44,7 +44,6 @@ public class LibrarySystem extends Application {
         // Finish setting up the stage (ENABLE THE GUI TO BE CLOSED USING THE TOP RIGHT
         // 'X' IN THE WINDOW), and show it.
         mainStage.setOnCloseRequest(event -> System.exit(0));
-        mainStage.initStyle(StageStyle.UTILITY);
 
         try {
             new Librarian();
