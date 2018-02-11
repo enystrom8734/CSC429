@@ -91,7 +91,8 @@ public class LibrarianView extends View {
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         insertNewBook = new Button("Insert New Book");
-        insertNewBook.setOnAction(this::processNewBook);
+        insertNewBook.setOnAction(
+                e -> myModel.stateChangeRequest("NewBook", ""));
         grid.add(insertNewBook, 0,0);
         GridPane.setHalignment(insertNewBook, HPos.CENTER);
 
@@ -101,7 +102,8 @@ public class LibrarianView extends View {
         GridPane.setHalignment(insertNewPatron, HPos.CENTER);
 
         searchBooks = new Button("Search Books");
-        searchBooks.setOnAction(this::processAction);
+        searchBooks.setOnAction(
+                e -> myModel.stateChangeRequest("SearchBooks", ""));
         grid.add(searchBooks, 0,2);
         GridPane.setHalignment(searchBooks, HPos.CENTER);
 
@@ -161,9 +163,6 @@ public class LibrarianView extends View {
 //            processUserIDAndPassword(useridEntered, passwordEntered);
 //        }
 
-    }
-    private void processNewBook(Event e) {
-        myModel.stateChangeRequest("NewBook", "");
     }
 
     /**
