@@ -5,7 +5,6 @@
 import event.Event;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Librarian;
 import userinterface.MainStageContainer;
 import userinterface.WindowPosition;

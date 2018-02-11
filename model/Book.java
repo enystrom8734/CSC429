@@ -96,6 +96,7 @@ public class Book extends EntityBase implements IView {
 
     private void setDependencies() {
         Properties dependencies = new Properties();
+        dependencies.setProperty("CancelAddBook", "CancelTransaction");
 
         myRegistry.setDependencies(dependencies);
     }
@@ -109,8 +110,8 @@ public class Book extends EntityBase implements IView {
 
     public void stateChangeRequest(String key, Object value) {
 
-        if (key.equals("NewBook")) {
-
+        if (key.equals("InsertBook")) {
+            processNewBook((Properties) value);
         }
 
         myRegistry.updateSubscribers(key, this);
@@ -159,7 +160,8 @@ public class Book extends EntityBase implements IView {
         swapToView(newScene);
     }
 
-    public void processNewBook(Properties bookInfo) {
+    private void processNewBook(Properties bookInfo) {
+        persistentState = new Properties();
         Enumeration allKeys = bookInfo.propertyNames();
         while (allKeys.hasMoreElements()) {
             String nextKey = (String) allKeys.nextElement();
@@ -169,6 +171,7 @@ public class Book extends EntityBase implements IView {
                 persistentState.setProperty(nextKey, nextValue);
             }
         }
+        updateStateInDatabase();
     }
 
     /**

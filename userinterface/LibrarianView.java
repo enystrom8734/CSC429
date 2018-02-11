@@ -18,8 +18,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.util.Properties;
-
 // project imports
 
 /**
@@ -59,7 +57,7 @@ public class LibrarianView extends View {
     // Create the label (Text) for the title of the screen
     private Node createTitle() {
 
-        Text titleText = new Text("  Brockport Library   \n System");
+        Text titleText = new Text(" Brockport Library System ");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         titleText.setTextAlignment(TextAlignment.CENTER);
         titleText.setFill(Color.BLACK);

@@ -4,8 +4,6 @@ package model;
 // system imports
 
 import event.Event;
-import exception.InvalidPrimaryKeyException;
-import exception.PasswordMismatchException;
 import impresario.IModel;
 import impresario.IView;
 import impresario.ModelRegistry;
@@ -29,13 +27,10 @@ public class Librarian implements IView, IModel
 {
     private ModelRegistry myRegistry;
 
-    private AccountHolder myAccountHolder;
-
     // GUI Components
     private Hashtable<String, Scene> myViews;
     private Stage myStage;
 
-    private String loginErrorMessage = "";
     private String transactionErrorMessage = "";
 
     // constructor for this class
@@ -46,11 +41,6 @@ public class Librarian implements IView, IModel
         // STEP 3.1: Create the Registry object - if you inherit from
         // EntityBase, this is done for you. Otherwise, you do it yourself
         myRegistry = new ModelRegistry("Librarian");
-        // IDE informs always false. Will never run this code
-//        if (myRegistry == null) {
-//            new Event(Event.getLeafLevelClassName(this), "Librarian",
-//                    "Could not instantiate Registry", Event.ERROR);
-//        }
 
         // STEP 3.2: Be sure to set the dependencies correctly
         setDependencies();
@@ -77,15 +67,8 @@ public class Librarian implements IView, IModel
      */
     public Object getState(String key) {
         switch (key) {
-            case "LoginError":
-                return loginErrorMessage;
             case "TransactionError":
                 return transactionErrorMessage;
-            case "Name":
-                if (myAccountHolder != null) {
-                    return myAccountHolder.getState("Name");
-                } else
-                    return "Undefined";
             default:
                 return "";
         }
@@ -100,6 +83,9 @@ public class Librarian implements IView, IModel
             case "SearchBooks":
                 searchBooks();
                 break;
+            case "CancelTransaction":
+                createAndShowLibrarianView();
+                break;
         }
 
         myRegistry.updateSubscribers(key, this);
@@ -109,61 +95,30 @@ public class Librarian implements IView, IModel
      * Called via the IView relationship
      */
     public void updateState(String key, Object value) {
-        // DEBUG System.out.println("Teller.updateState: key: " + key);
+        // DEBUG System.out.println("Librarian.updateState: key: " + key);
         stateChangeRequest(key, value);
-    }
-
-    /**
-     * Login AccountHolder corresponding to user name and password.
-     */
-    private boolean loginAccountHolder(Properties props) {
-        try {
-            myAccountHolder = new AccountHolder(props);
-            // DEBUG System.out.println("Account Holder: " + myAccountHolder.getState("Name") + " successfully logged in");
-            return true;
-        } catch (InvalidPrimaryKeyException ex) {
-            loginErrorMessage = "ERROR: " + ex.getMessage();
-            return false;
-        } catch (PasswordMismatchException exec) {
-
-            loginErrorMessage = "ERROR: " + exec.getMessage();
-            return false;
-        }
     }
 
     private void createNewBook() {
         Book newBook = new Book();
+        newBook.subscribe("CancelTransaction", this);
         newBook.createAndShowBookView();
     }
 
-    //    private void createNewPatron() {
-//
-//    }
+    private void createNewPatron() {
+
+    }
+
     private void searchBooks() {
 
     }
 
-    //    private void searchPatron() {
-//
-//    }
-    private void createAndShowTransactionChoiceView() {
-        Scene currentScene = (Scene) myViews.get("TransactionChoiceView");
-
-        if (currentScene == null) {
-            // create our initial view
-            View newView = ViewFactory.createView("TransactionChoiceView", this); // USE VIEW FACTORY
-            currentScene = new Scene(newView);
-            myViews.put("TransactionChoiceView", currentScene);
-        }
-
-
-        // make the view visible by installing it into the frame
-        swapToView(currentScene);
+    private void searchPatron() {
 
     }
 
     private void createAndShowLibrarianView() {
-        Scene currentScene = (Scene) myViews.get("LibrarianView");
+        Scene currentScene = myViews.get("LibrarianView");
 
         if (currentScene == null) {
             // create our initial view
@@ -180,8 +135,7 @@ public class Librarian implements IView, IModel
      * Register objects to receive state updates.
      */
     public void subscribe(String key, IView subscriber) {
-        // DEBUG: System.out.println("Cager[" + myTableName + "].subscribe");
-        // forward to our registry
+        // DEBUG: System.out.println("Cager[" + myTableName + "].subscribe"); forward to our registry
         myRegistry.subscribe(key, subscriber);
     }
 
@@ -189,24 +143,19 @@ public class Librarian implements IView, IModel
      * Unregister previously registered objects.
      */
     public void unSubscribe(String key, IView subscriber) {
-        // DEBUG: System.out.println(".unSubscribe");
-        // forward to our registry
+        // DEBUG: System.out.println(".unSubscribe"); forward to our registry
         myRegistry.unSubscribe(key, subscriber);
     }
 
     public void swapToView(Scene newScene) {
-
-
         if (newScene == null) {
             System.out.println("Librarian.swapToView(): Missing view for display");
             new Event(Event.getLeafLevelClassName(this), "swapToView",
                     "Missing view for display ", Event.ERROR);
             return;
         }
-
         myStage.setScene(newScene);
         myStage.sizeToScene();
-
 
         //Place in center
         WindowPosition.placeCenter(myStage);

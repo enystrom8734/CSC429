@@ -4,12 +4,12 @@ package userinterface;
 // system imports
 
 import impresario.IModel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,29 +20,33 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.util.Properties;
+import java.util.regex.Pattern;
+
 // project imports
 
 /**
  * The class containing the Account View  for the ATM application
  */
-//==============================================================
 public class BookView extends View {
 
     // GUI components
-    protected TextField accountNumber;
-    protected TextField acctType;
-    protected TextField balance;
+    protected TextField authorField;
+    protected TextField titleField;
+    protected TextField pubYearField;
     protected TextField serviceCharge;
 
-    protected Button cancelButton;
+    ComboBox statusCombo;
+
+    protected Button doneButton;
+    protected Button submitButton;
 
     // For showing error message
     protected MessageView statusLog;
 
     // constructor for this class -- takes a model object
-    //----------------------------------------------------------
-    public BookView(IModel account) {
-        super(account, "BookView");
+    public BookView(IModel book) {
+        super(book, "BookView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -58,7 +62,7 @@ public class BookView extends View {
 
         getChildren().add(container);
 
-        populateFields();
+//        populateFields();
 
         myModel.subscribe("ServiceCharge", this);
         myModel.subscribe("UpdateStatusMessage", this);
@@ -66,12 +70,11 @@ public class BookView extends View {
 
 
     // Create the title container
-    //-------------------------------------------------------------
     private Node createTitle() {
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER);
 
-        Text titleText = new Text("  Brockport Library   \n System");
+        Text titleText = new Text(" Brockport Library System ");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         titleText.setWrappingWidth(300);
         titleText.setTextAlignment(TextAlignment.CENTER);
@@ -82,84 +85,88 @@ public class BookView extends View {
     }
 
     // Create the main form content
-    //-------------------------------------------------------------
     private VBox createFormContent() {
-        VBox vbox = new VBox(101);
+        VBox vbox = new VBox(10);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setPadding(new Insets(25, 25, 0, 25));
 
-        Text prompt = new Text("ACCOUNT INFORMATION");
+        Text prompt = new Text("Enter New Book Information");
         prompt.setWrappingWidth(400);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-        Text accNumLabel = new Text(" Account Number : ");
+        Text authorLabel = new Text(" Author : ");
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-        accNumLabel.setFont(myFont);
-        accNumLabel.setWrappingWidth(150);
-        accNumLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(accNumLabel, 0, 1);
+        authorLabel.setFont(myFont);
+        authorLabel.setWrappingWidth(150);
+        authorLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(authorLabel, 0, 1);
 
-        accountNumber = new TextField();
-        accountNumber.setEditable(false);
-        grid.add(accountNumber, 1, 1);
+        authorField = new TextField();
+        authorField.setOnAction(e -> processAction(e));
+        grid.add(authorField, 1, 1);
 
-        Text acctTypeLabel = new Text(" Account Type : ");
-        acctTypeLabel.setFont(myFont);
-        acctTypeLabel.setWrappingWidth(150);
-        acctTypeLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(acctTypeLabel, 0, 2);
+        Text titleLabel = new Text(" Title : ");
+        titleLabel.setFont(myFont);
+        titleLabel.setWrappingWidth(150);
+        titleLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(titleLabel, 0, 2);
 
-        acctType = new TextField();
-        acctType.setEditable(false);
-        grid.add(acctType, 1, 2);
+        titleField = new TextField();
+        titleField.setOnAction(e -> processAction(e));
 
-        Text balLabel = new Text(" Account Balance : ");
-        balLabel.setFont(myFont);
-        balLabel.setWrappingWidth(150);
-        balLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(balLabel, 0, 3);
+        grid.add(titleField, 1, 2);
 
-        balance = new TextField();
-        balance.setEditable(false);
-        grid.add(balance, 1, 3);
+        Text pubYearLabel = new Text(" Publication Year : ");
+        pubYearLabel.setFont(myFont);
+        pubYearLabel.setWrappingWidth(150);
+        pubYearLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(pubYearLabel, 0, 3);
 
-        Text scLabel = new Text(" Service Charge : ");
-        scLabel.setFont(myFont);
-        scLabel.setWrappingWidth(150);
-        scLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(scLabel, 0, 4);
-
-        serviceCharge = new TextField();
-        serviceCharge.setEditable(true);
-        serviceCharge.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                clearErrorMessage();
-                myModel.stateChangeRequest("ServiceCharge", serviceCharge.getText());
+        pubYearField = new TextField();
+        pubYearField.setOnAction(e -> processAction(e));
+        pubYearField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,4}")) {
+                pubYearField.setText(oldValue);
             }
         });
-        grid.add(serviceCharge, 1, 4);
+        grid.add(pubYearField, 1, 3);
+// Combo box creation
+//        ObservableList<String> options = FXCollections.observableArrayList(
+//                "Active",
+//                "Inactive"
+//        );
+        Text statusLabel = new Text(" Status : ");
+        statusLabel.setFont(myFont);
+        statusLabel.setWrappingWidth(150);
+        statusLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(statusLabel, 0, 4);
+
+        statusCombo = new ComboBox();
+        statusCombo.getItems().addAll("Active", "Inactive");
+        statusCombo.setValue("Active");
+        grid.add(statusCombo, 1, 4);
+
 
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER);
-        cancelButton = new Button("Back");
-        cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+        submitButton = new Button("Submit");
+        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        submitButton.setOnAction(this::processAction);
 
-            @Override
-            public void handle(ActionEvent e) {
-                clearErrorMessage();
-                myModel.stateChangeRequest("AccountCancelled", null);
-            }
+        doneButton = new Button("Back");
+        doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        doneButton.setOnAction(e -> {
+            clearErrorMessage();
+            myModel.stateChangeRequest("CancelAddBook", null);
         });
-        doneCont.getChildren().add(cancelButton);
+        doneCont.getChildren().add(submitButton);
+        doneCont.getChildren().add(doneButton);
 
         vbox.getChildren().add(grid);
         vbox.getChildren().add(doneCont);
@@ -169,19 +176,51 @@ public class BookView extends View {
 
 
     // Create the status log field
-    //-------------------------------------------------------------
     protected MessageView createStatusLog(String initialMessage) {
         statusLog = new MessageView(initialMessage);
 
         return statusLog;
     }
 
-    //-------------------------------------------------------------
-    public void populateFields() {
-        accountNumber.setText((String) myModel.getState("AccountNumber"));
-        acctType.setText((String) myModel.getState("Type"));
-        balance.setText((String) myModel.getState("Balance"));
-        serviceCharge.setText((String) myModel.getState("ServiceCharge"));
+//    public void populateFields() {
+//        authorField.setText((String) myModel.getState("author"));
+//        titleField.setText((String) myModel.getState("title"));
+//        pubYearField.setText((String) myModel.getState("pubYear"));
+//        serviceCharge.setText((String) myModel.getState("status"));
+//    }
+
+    public void processAction(Event evt)
+    {
+        // DEBUG: System.out.println("TellerView.actionPerformed()");
+
+        clearErrorMessage();
+
+        String authorEntered = authorField.getText();
+        String titleEntered = titleField.getText();
+        String pubYearEntered = pubYearField.getText();
+        String statusSelected = (String) statusCombo.getValue();
+
+        Pattern pubYearValidation = Pattern.compile("^(18\\d\\d|19\\d\\d|200\\d|201[0-8])$");
+
+        if ((authorEntered == null) || (authorEntered.length() == 0)) {
+            displayErrorMessage("Please enter an author!");
+            authorField.requestFocus();
+        } else if ((titleEntered == null) || (titleEntered.length() == 0)) {
+            displayErrorMessage("Please enter a title!");
+            titleField.requestFocus();
+        } else if (!pubYearValidation.matcher(pubYearEntered).matches()) {
+            displayErrorMessage("Year must be between 1800 and 2018");
+            pubYearField.requestFocus();
+        } else {
+            Properties props = new Properties();
+            props.setProperty("author", authorEntered);
+            props.setProperty("title", titleEntered);
+            props.setProperty("pubYear", pubYearEntered);
+            props.setProperty("status", statusSelected.toLowerCase());
+            myModel.stateChangeRequest("InsertBook", props);
+            displayMessage("Success!");
+        }
+
     }
 
     /**
