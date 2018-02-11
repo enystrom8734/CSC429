@@ -12,6 +12,8 @@ public class ViewFactory {
                 return new BookView(model);
             case "BookCollectionView":
                 return new BookCollectionView(model);
+            case "BookSearchView":
+                return new BookCollectionView(model);
             case "TellerView":
                 return new TellerView(model);
             case "TransactionChoiceView":
