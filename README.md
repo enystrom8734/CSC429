@@ -52,7 +52,7 @@ Note that in the classes Book and Patron, you should have constructors that allo
 
 For the BookCollection class, you should have a constructor that does nothing, but set up a ‘blank’ Vector (call it ‘bookList’ – this should hold the collection of Book objects encapsulated by this class). In other words, begin by noting the code for the ‘AccountCollection’ class we discussed. This class has a constructor that takes in an ‘AccountHolder’ object and creates and holds a list of ‘Account’ objects owned by this ‘AccountHolder’. But for this ‘BookCollection’ class, the constructor should be parameter-less, and do something like this:
 ```java
-	public class BookCollection{ 
+public class BookCollection{ 
     // some code
     Vector bookList = new Vector(); // new Vector<Book>();
 }
