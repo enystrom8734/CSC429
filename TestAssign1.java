@@ -1,11 +1,11 @@
-import java.util.Scanner;
-import java.util.Properties;
-import java.util.Vector;
-
 import model.Book;
 import model.BookCollection;
-import model.PatronCollection;
 import model.Patron;
+import model.PatronCollection;
+
+import java.util.Properties;
+import java.util.Scanner;
+import java.util.Vector;
 
 public class TestAssign1 {
     private static Scanner scan = new Scanner(System.in).useDelimiter("(\\n)");

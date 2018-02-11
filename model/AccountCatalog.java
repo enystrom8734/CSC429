@@ -2,16 +2,15 @@
 package model;
 
 // system imports
+
+import event.Event;
+import exception.InvalidPrimaryKeyException;
+import impresario.IView;
+
 import java.util.Properties;
 import java.util.Vector;
-import javax.swing.JFrame;
 
 // project imports
-import exception.InvalidPrimaryKeyException;
-import event.Event;
-import database.*;
-
-import impresario.IView;
 
 /** The class containing the AccountCatalog for the ATM application */
 //==============================================================

@@ -2,25 +2,24 @@
 package model;
 
 // system imports
-import java.util.Hashtable;
-import java.util.Properties;
 
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-
-// project imports
-import impresario.IModel;
-import impresario.ISlideShow;
-import impresario.IView;
-import impresario.ModelRegistry;
-
+import event.Event;
 import exception.InvalidPrimaryKeyException;
 import exception.PasswordMismatchException;
-import event.Event;
+import impresario.IModel;
+import impresario.IView;
+import impresario.ModelRegistry;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import userinterface.MainStageContainer;
 import userinterface.View;
 import userinterface.ViewFactory;
 import userinterface.WindowPosition;
+
+import java.util.Hashtable;
+import java.util.Properties;
+
+// project imports
 
 /** The class containing the Teller  for the ATM application */
 //==============================================================
@@ -90,17 +89,17 @@ public class Teller implements IView, IModel
 	//----------------------------------------------------------
 	public Object getState(String key)
 	{
-		if (key.equals("LoginError") == true)
+		if (key.equals("LoginError"))
 		{
 			return loginErrorMessage;
 		}
 		else
-		if (key.equals("TransactionError") == true)
+		if (key.equals("TransactionError"))
 		{
 			return transactionErrorMessage;
 		}
 		else
-		if (key.equals("Name") == true)
+		if (key.equals("Name"))
 		{
 			if (myAccountHolder != null)
 			{
@@ -120,34 +119,33 @@ public class Teller implements IView, IModel
 		// just set up dependencies for
 		// DEBUG System.out.println("Teller.sCR: key = " + key);
 
-		if (key.equals("Login") == true)
+		if (key.equals("Login"))
 		{
 			if (value != null)
 			{
 				loginErrorMessage = "";
 
 				boolean flag = loginAccountHolder((Properties)value);
-				if (flag == true)
+				if (flag)
 				{
 					createAndShowTransactionChoiceView();
 				}
 			}
 		}
 		else
-		if (key.equals("CancelTransaction") == true)
+		if (key.equals("CancelTransaction"))
 		{
 			createAndShowTransactionChoiceView();
 		}
 		else
-		if ((key.equals("Deposit") == true) || (key.equals("Withdraw") == true) ||
-			(key.equals("Transfer") == true) || (key.equals("BalanceInquiry") == true) ||
-			(key.equals("ImposeServiceCharge") == true))
+		if ((key.equals("Deposit") || (key.equals("Withdraw")) || (key.equals("Transfer"))
+				|| (key.equals("BalanceInquiry")) || (key.equals("ImposeServiceCharge"))))
 		{
-			String transType = key;
+//			String transType = key;
 
 			if (myAccountHolder != null)
 			{
-				doTransaction(transType);
+				doTransaction(key);
 			}
 			else
 			{
@@ -156,7 +154,7 @@ public class Teller implements IView, IModel
 
 		}
 		else
-		if (key.equals("Logout") == true)
+		if (key.equals("Logout"))
 		{
 			myAccountHolder = null;
 			myViews.remove("TransactionChoiceView");
@@ -190,13 +188,13 @@ public class Teller implements IView, IModel
 		}
 		catch (InvalidPrimaryKeyException ex)
 		{
-				loginErrorMessage = "ERROR: " + ex.getMessage();
+//				loginErrorMessage = "ERROR: " + ex.getMessage();
 				return false;
 		}
 		catch (PasswordMismatchException exec)
 		{
 
-				loginErrorMessage = "ERROR: " + exec.getMessage();
+//				loginErrorMessage = "ERROR: " + exec.getMessage();
 				return false;
 		}
 	}

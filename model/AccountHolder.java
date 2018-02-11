@@ -2,18 +2,16 @@
 package model;
 
 // system imports
-import java.sql.SQLException;
+
+import exception.InvalidPrimaryKeyException;
+import exception.PasswordMismatchException;
+import impresario.IView;
+
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
-import javax.swing.JFrame;
 
 // project imports
-import exception.InvalidPrimaryKeyException;
-import exception.PasswordMismatchException;
-import database.*;
-
-import impresario.IView;
 
 /** The class containing the AccountHolder  for the ATM application */
 //==============================================================
@@ -44,7 +42,7 @@ public class AccountHolder extends EntityBase implements IView
 			// There should be EXACTLY one account. More than that is an error
 			if (size != 1)
 			{
-				throw new InvalidPrimaryKeyException("Multiple accounts matching user id : "
+				throw new InvalidPrimaryKeyException("2Multiple accounts matching user id : "
 					+ idToQuery + " found.");
 			}
 			else
@@ -112,7 +110,7 @@ public class AccountHolder extends EntityBase implements IView
 			// There should be EXACTLY one account. More than that is an error
 			if (size != 1)
 			{
-				throw new InvalidPrimaryKeyException("Multiple accounts matching user id : "
+				throw new InvalidPrimaryKeyException("1Multiple accounts matching user id : "
 					+ idToQuery + " found.");
 			}
 			else

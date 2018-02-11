@@ -13,24 +13,12 @@
 package userinterface;
 
 // system imports
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.text.TextAlignment;
 
 // project imports
 
@@ -54,7 +42,7 @@ public class MessageView extends Text
 	//----------------------------------------------------------
 	public void displayMessage(String message)
 	{
-		// display the passed text in red
+		// display the passed text in blue
 		setFill(Color.BLUE);
 		setText(message);
 	}

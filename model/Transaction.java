@@ -2,21 +2,22 @@
 package model;
 
 // system imports
+
+import event.Event;
+import exception.InvalidPrimaryKeyException;
+import impresario.IModel;
+import impresario.IView;
+import impresario.ModelRegistry;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import userinterface.MainStageContainer;
+import userinterface.WindowPosition;
+
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Vector;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 
 // project imports
-import exception.InvalidPrimaryKeyException;
-import event.Event;
-
-import impresario.*;
-
-import userinterface.MainStageContainer;
-import userinterface.View;
-import userinterface.WindowPosition;
 
 /** The class containing the Transaction for the ATM application */
 //==============================================================

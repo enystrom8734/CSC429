@@ -1,8 +1,8 @@
 package userinterface;
 
-import java.util.Vector;
-
 import javafx.beans.property.SimpleStringProperty;
+
+import java.util.Vector;
 
 //==============================================================================
 public class AccountTableModel

@@ -2,17 +2,16 @@
 package model;
 
 // system imports
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import java.util.Properties;
-import java.util.Vector;
 
-// project imports
 import event.Event;
 import exception.InvalidPrimaryKeyException;
-
+import javafx.scene.Scene;
 import userinterface.View;
 import userinterface.ViewFactory;
+
+import java.util.Properties;
+
+// project imports
 
 /** The class containing the WithdrawTransaction for the ATM application */
 //==============================================================

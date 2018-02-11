@@ -2,19 +2,18 @@
 package model;
 
 // system imports
-import java.util.Properties;
-import java.util.Vector;
-import javafx.scene.Scene;
 
-// project imports
-import exception.InvalidPrimaryKeyException;
 import event.Event;
-import database.*;
-
+import exception.InvalidPrimaryKeyException;
 import impresario.IView;
-
+import javafx.scene.Scene;
 import userinterface.View;
 import userinterface.ViewFactory;
+
+import java.util.Properties;
+import java.util.Vector;
+
+// project imports
 
 
 /** The class containing the AccountCollection for the ATM application */

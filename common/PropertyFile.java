@@ -24,14 +24,16 @@
 package common;
 
 // system imports
+
+import event.Event;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.File;
 import java.util.Properties;
 
 // project imports
-import event.Event;
 
 /** Layer a file onto a Properties object */
 //==============================================================

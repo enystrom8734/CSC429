@@ -9,9 +9,10 @@
 package userinterface;
 
 // system imports
+
 import javafx.geometry.Rectangle2D;
-import javafx.stage.Stage;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 // project imports
 

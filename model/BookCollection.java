@@ -2,12 +2,13 @@
 package model;
 
 // system imports
+
+import impresario.IView;
+
 import java.util.Properties;
 import java.util.Vector;
 
 // project imports
-
-import impresario.IView;
 
 /** The class containing the BookCollection for the Assignment 1 application */
 //==============================================================

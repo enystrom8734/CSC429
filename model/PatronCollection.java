@@ -2,18 +2,13 @@
 package model;
 
 // system imports
-import java.util.Properties;
-import java.util.Vector;
-import javafx.scene.Scene;
-
-// project imports
-import exception.InvalidPrimaryKeyException;
-import event.Event;
-import database.*;
 
 import impresario.IView;
 
-import userinterface.View;
+import java.util.Properties;
+import java.util.Vector;
+
+// project imports
 //import userinterface.ViewFactory;
 
 /** The class containing the PatronCollection for the application */

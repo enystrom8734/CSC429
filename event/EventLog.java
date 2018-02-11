@@ -22,15 +22,16 @@
 package event;
 
 // system imports
+
+import common.StringList;
+
+import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.File;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 // project imports
-import common.StringList;
 
 /** 
  * This class maintains the record of all generated events in a log file.

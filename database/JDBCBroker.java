@@ -23,15 +23,15 @@
 package database;
 
 /// system imports
-import java.util.Enumeration;
-import java.sql.Driver;
-import java.sql.DriverManager;
+
+import common.PropertyFile;
+import event.Event;
+
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.SQLException;
 
 // project imports
-import common.PropertyFile;
-import event.Event;
 
 //==============================================================
 public class JDBCBroker

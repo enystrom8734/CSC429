@@ -2,9 +2,6 @@
 package model;
 
 // system imports
-import java.util.Vector;
-import javax.swing.JFrame;
-
 // project imports
 
 /** The class containing the TransactionFactory for the ATM application */

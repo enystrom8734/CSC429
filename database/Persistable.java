@@ -23,20 +23,14 @@
 package database;
 
 // system imports
-import java.util.Enumeration;
+
+import event.Event;
+
+import java.sql.*;
 import java.util.Properties;
 import java.util.Vector;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.DatabaseMetaData;
-
-
 // project imports
-import event.Event;
 
 
 // Beginning of DatabaseManipulator class

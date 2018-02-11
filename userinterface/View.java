@@ -13,17 +13,14 @@
 package userinterface;
 
 // system imports
-import java.util.Properties;
-import java.util.Vector;
-import java.util.EventObject;
+
+import impresario.ControlRegistry;
+import impresario.IControl;
+import impresario.IModel;
+import impresario.IView;
 import javafx.scene.Group;
 
 // project imports
-import common.StringList;
-import impresario.IView;
-import impresario.IModel;
-import impresario.IControl;
-import impresario.ControlRegistry;
 
 //==============================================================
 public abstract class View extends Group
