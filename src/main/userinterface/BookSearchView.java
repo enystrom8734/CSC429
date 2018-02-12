@@ -82,10 +82,10 @@ public class BookSearchView extends View {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 0, 25));
+        grid.setPadding(new Insets(25, 25, 10, 25));
 
         Text prompt = new Text("Enter book title to search for");
-        prompt.setWrappingWidth(400);
+        prompt.setWrappingWidth(200);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
@@ -93,7 +93,7 @@ public class BookSearchView extends View {
         Text titleSearchLabel = new Text(" Title : ");
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
         titleSearchLabel.setFont(myFont);
-        titleSearchLabel.setWrappingWidth(150);
+        titleSearchLabel.setWrappingWidth(50);
         titleSearchLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(titleSearchLabel, 0, 1);
 
@@ -101,14 +101,14 @@ public class BookSearchView extends View {
         titleSearchField.setOnAction(e -> processAction(e));
         grid.add(titleSearchField, 1, 1);
 
-        HBox doneCont = new HBox(10);
+        HBox doneCont = new HBox(100);
         doneCont.setAlignment(Pos.CENTER);
         Button submitButton = new Button("Submit");
-        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+//        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         submitButton.setOnAction(this::processAction);
 
         Button doneButton = new Button("Back");
-        doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+//        doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         doneButton.setOnAction(e -> {
             clearErrorMessage();
             myModel.stateChangeRequest("CancelTransaction", null);
@@ -130,26 +130,19 @@ public class BookSearchView extends View {
         return statusLog;
     }
 
-//    public void populateFields() {
-//        titleSearchField.setText((String) myModel.getState("author"));
-//        titleField.setText((String) myModel.getState("title"));
-//        pubYearField.setText((String) myModel.getState("pubYear"));
-//        serviceCharge.setText((String) myModel.getState("status"));
-//    }
-
     private void processAction(Event evt)
     {
         clearErrorMessage();
 
         String titleEntered = titleSearchField.getText();
 
-        if ((titleEntered == null) || (titleEntered.length() == 0)) {
-            displayErrorMessage("Please enter a title!");
-            titleSearchField.requestFocus();
-        } else {
+//        if ((titleEntered == null) || (titleEntered.length() == 0)) {
+//            displayErrorMessage("Please enter a title!");
+//            titleSearchField.requestFocus();
+//        } else {
             myModel.stateChangeRequest("SearchBook", titleEntered);
-            displayMessage("Success!");
-        }
+//            displayMessage("Success!");
+//        }
 
     }
 

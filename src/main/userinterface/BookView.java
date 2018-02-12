@@ -87,10 +87,10 @@ public class BookView extends View {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 0, 25));
+        grid.setPadding(new Insets(25, 25, 10, 25));
 
         Text prompt = new Text("Enter New Book Information");
-        prompt.setWrappingWidth(400);
+        prompt.setWrappingWidth(300);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
@@ -98,7 +98,7 @@ public class BookView extends View {
         Text authorLabel = new Text(" Author : ");
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
         authorLabel.setFont(myFont);
-        authorLabel.setWrappingWidth(150);
+        authorLabel.setWrappingWidth(110);
         authorLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(authorLabel, 0, 1);
 
@@ -108,7 +108,7 @@ public class BookView extends View {
 
         Text titleLabel = new Text(" Title : ");
         titleLabel.setFont(myFont);
-        titleLabel.setWrappingWidth(150);
+        titleLabel.setWrappingWidth(110);
         titleLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(titleLabel, 0, 2);
 
@@ -119,7 +119,7 @@ public class BookView extends View {
 
         Text pubYearLabel = new Text(" Publication Year : ");
         pubYearLabel.setFont(myFont);
-        pubYearLabel.setWrappingWidth(150);
+        pubYearLabel.setWrappingWidth(110);
         pubYearLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(pubYearLabel, 0, 3);
 
@@ -134,7 +134,7 @@ public class BookView extends View {
 
         Text statusLabel = new Text(" Status : ");
         statusLabel.setFont(myFont);
-        statusLabel.setWrappingWidth(150);
+        statusLabel.setWrappingWidth(110);
         statusLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(statusLabel, 0, 4);
 
@@ -144,14 +144,14 @@ public class BookView extends View {
         grid.add(statusCombo, 1, 4);
 
 
-        HBox doneCont = new HBox(10);
+        HBox doneCont = new HBox(100);
         doneCont.setAlignment(Pos.CENTER);
         submitButton = new Button("Submit");
-        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+//        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         submitButton.setOnAction(this::processAction);
 
         Button doneButton = new Button("Back");
-        doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+//        doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         doneButton.setOnAction(e -> {
             clearErrorMessage();
             myModel.stateChangeRequest("CancelAddBook", null);

@@ -51,10 +51,10 @@ public class Librarian implements IView, IModel
 
     private void setDependencies() {
         Properties dependencies = new Properties();
-        dependencies.setProperty("NewBook", "TransactionError");
-        dependencies.setProperty("NewPatron", "TransactionError");
-        dependencies.setProperty("SearchBooks", "TransactionError");
-        dependencies.setProperty("SearchPatrons", "TransactionError");
+//        dependencies.setProperty("NewBook", "TransactionError");
+//        dependencies.setProperty("NewPatron", "TransactionError");
+//        dependencies.setProperty("SearchBooks", "TransactionError");
+//        dependencies.setProperty("SearchPatrons", "TransactionError");
         myRegistry.setDependencies(dependencies);
     }
 
@@ -83,8 +83,8 @@ public class Librarian implements IView, IModel
             case "SearchBookView":
                 createAndShowBookSearchView();
                 break;
-            case "SearchBooks":
-                searchBooks();
+            case "SearchBook":
+                searchBooks((String)value);
                 break;
             case "CancelTransaction":
                 createAndShowLibrarianView();
@@ -98,7 +98,6 @@ public class Librarian implements IView, IModel
      * Called via the IView relationship
      */
     public void updateState(String key, Object value) {
-        // DEBUG System.out.println("Librarian.updateState: key: " + key);
         stateChangeRequest(key, value);
     }
 
@@ -108,13 +107,18 @@ public class Librarian implements IView, IModel
         newBook.createAndShowBookView();
     }
 
+    private void searchBooks(String title) {
+        BookCollection bookList = new BookCollection(title);
+        bookList.subscribe("CancelTransaction", this);
+        bookList.subscribe("SearchBookView", this);
+        bookList.createAndShowBookCollectionView();
+
+    }
+
     private void createNewPatron() {
 
     }
 
-    private void searchBooks() {
-
-    }
 
     private void searchPatron() {
 
@@ -152,7 +156,6 @@ public class Librarian implements IView, IModel
      * Register objects to receive state updates.
      */
     public void subscribe(String key, IView subscriber) {
-        // DEBUG: System.out.println("Cager[" + myTableName + "].subscribe"); forward to our registry
         myRegistry.subscribe(key, subscriber);
     }
 
@@ -160,7 +163,6 @@ public class Librarian implements IView, IModel
      * Unregister previously registered objects.
      */
     public void unSubscribe(String key, IView subscriber) {
-        // DEBUG: System.out.println(".unSubscribe"); forward to our registry
         myRegistry.unSubscribe(key, subscriber);
     }
 

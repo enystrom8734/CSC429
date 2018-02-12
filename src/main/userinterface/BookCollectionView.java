@@ -37,7 +37,7 @@ public class BookCollectionView extends View {
 
     //--------------------------------------------------------------------------
     public BookCollectionView(IModel wsc) {
-        super(wsc, "AccountCollectionView");
+        super(wsc, "BookCollectionView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -119,40 +119,45 @@ public class BookCollectionView extends View {
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-        tableOfBooks = new TableView<BookTableModel>();
+        tableOfBooks = new TableView<>();
         tableOfBooks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        TableColumn accountNumberColumn = new TableColumn("Account Number");
-        accountNumberColumn.setMinWidth(100);
-        accountNumberColumn.setCellValueFactory(
-                new PropertyValueFactory<BookTableModel, String>("authorField"));
+        TableColumn bookIdColumn = new TableColumn("BookId");
+        bookIdColumn.setMinWidth(45);
+        bookIdColumn.setCellValueFactory(
+                new PropertyValueFactory<BookTableModel, String>("bookId"));
 
-        TableColumn accountTypeColumn = new TableColumn("Account Type");
-        accountTypeColumn.setMinWidth(100);
-        accountTypeColumn.setCellValueFactory(
-                new PropertyValueFactory<BookTableModel, String>("accountType"));
+        TableColumn authorColumn = new TableColumn("Author");
+        authorColumn.setMinWidth(100);
+        authorColumn.setCellValueFactory(
+                new PropertyValueFactory<BookTableModel, String>("author"));
 
-        TableColumn balanceColumn = new TableColumn("Balance");
-        balanceColumn.setMinWidth(100);
-        balanceColumn.setCellValueFactory(
-                new PropertyValueFactory<BookTableModel, String>("pubYearField"));
+        TableColumn titleColumn = new TableColumn("Title");
+        titleColumn.setMinWidth(200);
+        titleColumn.setCellValueFactory(
+                new PropertyValueFactory<BookTableModel, String>("title"));
 
-        TableColumn serviceChargeColumn = new TableColumn("Service Charge");
-        serviceChargeColumn.setMinWidth(100);
-        serviceChargeColumn.setCellValueFactory(
-                new PropertyValueFactory<BookTableModel, String>("serviceCharge"));
+        TableColumn pubYearColumn = new TableColumn("Publication\nYear");
+        pubYearColumn.setMinWidth(100);
+        pubYearColumn.setCellValueFactory(
+                new PropertyValueFactory<BookTableModel, String>("pubYear"));
 
-        tableOfBooks.getColumns().addAll(accountNumberColumn,
-                accountTypeColumn, balanceColumn, serviceChargeColumn);
+        TableColumn statusColumn = new TableColumn("Status");
+        statusColumn.setMinWidth(60);
+        statusColumn.setCellValueFactory(
+                new PropertyValueFactory<BookTableModel, String>("status"));
+
+        tableOfBooks.getColumns().addAll(bookIdColumn, authorColumn,
+                titleColumn, pubYearColumn, statusColumn);
 
         tableOfBooks.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() >= 2) {
                 processBookSelected();
             }
         });
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefSize(115, 150);
-        scrollPane.setContent(tableOfBooks);
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.setPrefSize(115, 150);
+//        scrollPane.setContent(tableOfBooks);
 
         submitButton = new Button("Submit");
         submitButton.setOnAction(e -> {
@@ -164,15 +169,8 @@ public class BookCollectionView extends View {
 
         cancelButton = new Button("Back");
         cancelButton.setOnAction(e -> {
-            /**
-             * Process the Cancel button.
-             * The ultimate result of this action is that the transaction will tell the teller to
-             * to switch to the transaction choice view. BUT THAT IS NOT THIS VIEW'S CONCERN.
-             * It simply tells its model (controller) that the transaction was canceled, and leaves it
-             * to the model to decide to tell the teller to do the switch back.
-             */
             clearErrorMessage();
-            myModel.stateChangeRequest("CancelAccountList", null);
+            myModel.stateChangeRequest("CancelSearchBook", null);
         });
 
         HBox btnContainer = new HBox(100);
@@ -180,8 +178,10 @@ public class BookCollectionView extends View {
         btnContainer.getChildren().add(submitButton);
         btnContainer.getChildren().add(cancelButton);
 
+        tableOfBooks.setPrefSize(535,200);
+
         vbox.getChildren().add(grid);
-        vbox.getChildren().add(scrollPane);
+        vbox.getChildren().add(tableOfBooks);
         vbox.getChildren().add(btnContainer);
 
         return vbox;
@@ -191,13 +191,13 @@ public class BookCollectionView extends View {
     public void updateState(String key, Object value) {
     }
 
-    protected void processBookSelected() {
+    private void processBookSelected() {
         BookTableModel selectedItem = tableOfBooks.getSelectionModel().getSelectedItem();
 
         if (selectedItem != null) {
             String selectedBookId = selectedItem.getBookId();
 
-            myModel.stateChangeRequest("AccountSelected", selectedBookId);
+            myModel.stateChangeRequest("BookSelected", selectedBookId);
         }
     }
 
