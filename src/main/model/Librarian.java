@@ -80,6 +80,9 @@ public class Librarian implements IView, IModel
             case "NewBook":
                 createNewBook();
                 break;
+            case "SearchBookView":
+                createAndShowBookSearchView();
+                break;
             case "SearchBooks":
                 searchBooks();
                 break;
@@ -125,6 +128,20 @@ public class Librarian implements IView, IModel
             View newView = ViewFactory.createView("LibrarianView", this); // USE VIEW FACTORY
             currentScene = new Scene(newView);
             myViews.put("LibrarianView", currentScene);
+        }
+
+        swapToView(currentScene);
+
+    }
+
+    private void createAndShowBookSearchView() {
+        Scene currentScene = myViews.get("BookSearchView");
+
+        if (currentScene == null) {
+            // create our initial view
+            View newView = ViewFactory.createView("BookSearchView", this); // USE VIEW FACTORY
+            currentScene = new Scene(newView);
+            myViews.put("BookSearchView", currentScene);
         }
 
         swapToView(currentScene);

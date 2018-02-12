@@ -28,25 +28,17 @@ import java.util.regex.Pattern;
 /**
  * The class containing the Account View  for the ATM application
  */
-public class BookView extends View {
+public class BookSearchView extends View {
 
     // GUI components
-    protected TextField authorField;
-    protected TextField titleField;
-    protected TextField pubYearField;
-    protected TextField serviceCharge;
-
-    ComboBox statusCombo;
-
-    protected Button doneButton;
-    protected Button submitButton;
+    private TextField titleSearchField;
 
     // For showing error message
-    protected MessageView statusLog;
+    private MessageView statusLog;
 
     // constructor for this class -- takes a model object
-    public BookView(IModel book) {
-        super(book, "BookView");
+    BookSearchView(IModel librarian) {
+        super(librarian, "BookSearchView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -61,8 +53,6 @@ public class BookView extends View {
         container.getChildren().add(createStatusLog("             "));
 
         getChildren().add(container);
-
-//        populateFields();
 
         myModel.subscribe("ServiceCharge", this);
         myModel.subscribe("UpdateStatusMessage", this);
@@ -94,76 +84,34 @@ public class BookView extends View {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 0, 25));
 
-        Text prompt = new Text("Enter New Book Information");
+        Text prompt = new Text("Enter book title to search for");
         prompt.setWrappingWidth(400);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-        Text authorLabel = new Text(" Author : ");
+        Text titleSearchLabel = new Text(" Title : ");
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
-        authorLabel.setFont(myFont);
-        authorLabel.setWrappingWidth(150);
-        authorLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(authorLabel, 0, 1);
+        titleSearchLabel.setFont(myFont);
+        titleSearchLabel.setWrappingWidth(150);
+        titleSearchLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(titleSearchLabel, 0, 1);
 
-        authorField = new TextField();
-        authorField.setOnAction(e -> processAction(e));
-        grid.add(authorField, 1, 1);
-
-        Text titleLabel = new Text(" Title : ");
-        titleLabel.setFont(myFont);
-        titleLabel.setWrappingWidth(150);
-        titleLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(titleLabel, 0, 2);
-
-        titleField = new TextField();
-        titleField.setOnAction(e -> processAction(e));
-
-        grid.add(titleField, 1, 2);
-
-        Text pubYearLabel = new Text(" Publication Year : ");
-        pubYearLabel.setFont(myFont);
-        pubYearLabel.setWrappingWidth(150);
-        pubYearLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(pubYearLabel, 0, 3);
-
-        pubYearField = new TextField();
-        pubYearField.setOnAction(e -> processAction(e));
-        pubYearField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,4}")) {
-                pubYearField.setText(oldValue);
-            }
-        });
-        grid.add(pubYearField, 1, 3);
-// Combo box creation
-//        ObservableList<String> options = FXCollections.observableArrayList(
-//                "Active",
-//                "Inactive"
-//        );
-        Text statusLabel = new Text(" Status : ");
-        statusLabel.setFont(myFont);
-        statusLabel.setWrappingWidth(150);
-        statusLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(statusLabel, 0, 4);
-
-        statusCombo = new ComboBox();
-        statusCombo.getItems().addAll("Active", "Inactive");
-        statusCombo.setValue("Active");
-        grid.add(statusCombo, 1, 4);
-
+        titleSearchField = new TextField();
+        titleSearchField.setOnAction(e -> processAction(e));
+        grid.add(titleSearchField, 1, 1);
 
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER);
-        submitButton = new Button("Submit");
+        Button submitButton = new Button("Submit");
         submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         submitButton.setOnAction(this::processAction);
 
-        doneButton = new Button("Back");
+        Button doneButton = new Button("Back");
         doneButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         doneButton.setOnAction(e -> {
             clearErrorMessage();
-            myModel.stateChangeRequest("CancelAddBook", null);
+            myModel.stateChangeRequest("CancelTransaction", null);
         });
         doneCont.getChildren().add(submitButton);
         doneCont.getChildren().add(doneButton);
@@ -183,41 +131,23 @@ public class BookView extends View {
     }
 
 //    public void populateFields() {
-//        authorField.setText((String) myModel.getState("author"));
+//        titleSearchField.setText((String) myModel.getState("author"));
 //        titleField.setText((String) myModel.getState("title"));
 //        pubYearField.setText((String) myModel.getState("pubYear"));
 //        serviceCharge.setText((String) myModel.getState("status"));
 //    }
 
-    public void processAction(Event evt)
+    private void processAction(Event evt)
     {
-        // DEBUG: System.out.println("TellerView.actionPerformed()");
-
         clearErrorMessage();
 
-        String authorEntered = authorField.getText();
-        String titleEntered = titleField.getText();
-        String pubYearEntered = pubYearField.getText();
-        String statusSelected = (String) statusCombo.getValue();
+        String titleEntered = titleSearchField.getText();
 
-        Pattern pubYearValidation = Pattern.compile("^(18\\d\\d|19\\d\\d|200\\d|201[0-8])$");
-
-        if ((authorEntered == null) || (authorEntered.length() == 0)) {
-            displayErrorMessage("Please enter an author!");
-            authorField.requestFocus();
-        } else if ((titleEntered == null) || (titleEntered.length() == 0)) {
+        if ((titleEntered == null) || (titleEntered.length() == 0)) {
             displayErrorMessage("Please enter a title!");
-            titleField.requestFocus();
-        } else if (!pubYearValidation.matcher(pubYearEntered).matches()) {
-            displayErrorMessage("Year must be between 1800 and 2018");
-            pubYearField.requestFocus();
+            titleSearchField.requestFocus();
         } else {
-            Properties props = new Properties();
-            props.setProperty("author", authorEntered);
-            props.setProperty("title", titleEntered);
-            props.setProperty("pubYear", pubYearEntered);
-            props.setProperty("status", statusSelected.toLowerCase());
-            myModel.stateChangeRequest("InsertBook", props);
+            myModel.stateChangeRequest("SearchBook", titleEntered);
             displayMessage("Success!");
         }
 
@@ -229,12 +159,6 @@ public class BookView extends View {
     //---------------------------------------------------------
     public void updateState(String key, Object value) {
         clearErrorMessage();
-
-        if (key.equals("ServiceCharge")) {
-            String val = (String) value;
-            serviceCharge.setText(val);
-            displayMessage("Service Charge Imposed: $ " + val);
-        }
     }
 
     /**
