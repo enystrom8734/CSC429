@@ -128,12 +128,12 @@ public class PatronSearchView extends View {
         clearErrorMessage();
         String zipEntered = zipSearchField.getText();
 
-        if ((zipEntered == null) || (zipEntered.length() == 0)) {
-            displayErrorMessage("Please enter a ZIP to search!");
-            zipSearchField.requestFocus();
-        } else {
+//        if ((zipEntered == null) || (zipEntered.length() == 0)) {
+//            displayErrorMessage("Please enter a ZIP to search!");
+//            zipSearchField.requestFocus();
+//        } else {
             myModel.stateChangeRequest("SearchPatrons", zipEntered);
-        }
+//        }
     }
 
     /**

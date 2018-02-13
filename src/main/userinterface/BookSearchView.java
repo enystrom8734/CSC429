@@ -131,13 +131,13 @@ public class BookSearchView extends View {
     {
         clearErrorMessage();
         String titleEntered = titleSearchField.getText();
-
-        if ((titleEntered == null) || (titleEntered.length() == 0)) {
-            displayErrorMessage("Please enter a title to search!");
-            titleSearchField.requestFocus();
-        } else {
+//
+//        if ((titleEntered == null) || (titleEntered.length() == 0)) {
+//            displayErrorMessage("Please enter a title to search!");
+//            titleSearchField.requestFocus();
+//        } else {
             myModel.stateChangeRequest("SearchBook", titleEntered);
-        }
+//        }
 
     }
 

@@ -136,7 +136,11 @@ public class Librarian implements IView, IModel
         PatronCollection patronList = new PatronCollection();
         patronList.subscribe("CancelTransaction", this);
         patronList.subscribe("SearchPatronView", this);
-        patronList.findPatronsAtZipCode(zip);
+        if (zip.equals("")) {
+            patronList.findAllPatrons();
+        } else {
+            patronList.findPatronsAtZipCode(zip);
+        }
         patronList.createAndShowPatronCollectionView();
     }
 

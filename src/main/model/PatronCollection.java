@@ -52,6 +52,12 @@ public class PatronCollection extends EntityBase implements IView
 		return doQuery(query);
 	}
 
+	public Vector findAllPatrons() {
+
+		String query = "SELECT * FROM " + myTableName + " ORDER BY name ASC;";
+		return doQuery(query);
+	}
+
 	private Vector doQuery(String query) {
 		try {
 			Vector allDataRetrieved = getSelectQueryResult(query);
