@@ -27,14 +27,8 @@ public class BookCollection extends EntityBase implements IView {
     public BookCollection()
     {
         super(myTableName);
-        bookList = new Vector<>();
-    }
-
-    public BookCollection(String title)
-    {
-        super(myTableName);
         setDependencies();
-        findBooksWithTitleLike(title);
+        bookList = new Vector<>();
     }
 
     public Vector findBooksOlderThanDate(String year) {
@@ -61,7 +55,7 @@ public class BookCollection extends EntityBase implements IView {
         try {
             Vector allDataRetrieved = getSelectQueryResult(query);
             if (allDataRetrieved != null) {
-                bookList = new Vector<>();
+//                bookList = new Vector<>();
                 for (int index = 0; index < allDataRetrieved.size(); index++) {
                     Properties data = (Properties) allDataRetrieved.elementAt(index);
                     Book book = new Book(data);

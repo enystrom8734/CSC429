@@ -15,11 +15,11 @@ public class ViewFactory {
             case "BookSearchView":
                 return new BookSearchView(model);
             case "PatronView":
-                return new BookView(model);
+                return new PatronView(model);
             case "PatronCollectionView":
-                return new BookCollectionView(model);
+                return new PatronCollectionView(model);
             case "PatronSearchView":
-                return new BookSearchView(model);
+                return new PatronSearchView(model);
             default:
                 return null;
         }

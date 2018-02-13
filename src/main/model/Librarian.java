@@ -86,6 +86,15 @@ public class Librarian implements IView, IModel
             case "SearchBook":
                 searchBooks((String)value);
                 break;
+            case "NewPatron":
+                createNewPatron();
+                break;
+            case "SearchPatronView":
+                createAndShowPatronSearchView();
+                break;
+            case "SearchPatrons":
+                searchPatrons((String)value);
+                break;
             case "CancelTransaction":
                 createAndShowLibrarianView();
                 break;
@@ -93,6 +102,7 @@ public class Librarian implements IView, IModel
 
         myRegistry.updateSubscribers(key, this);
     }
+
 
     /**
      * Called via the IView relationship
@@ -107,21 +117,27 @@ public class Librarian implements IView, IModel
         newBook.createAndShowBookView();
     }
 
+    private void createNewPatron() {
+        Patron newPatron = new Patron();
+        newPatron.subscribe("CancelTransaction", this);
+        newPatron.createAndShowPatronView();
+    }
+
     private void searchBooks(String title) {
-        BookCollection bookList = new BookCollection(title);
+        BookCollection bookList = new BookCollection();
         bookList.subscribe("CancelTransaction", this);
         bookList.subscribe("SearchBookView", this);
+        bookList.findBooksWithTitleLike(title);
         bookList.createAndShowBookCollectionView();
 
     }
 
-    private void createNewPatron() {
-
-    }
-
-
-    private void searchPatron() {
-
+    private void searchPatrons(String zip) {
+        PatronCollection patronList = new PatronCollection();
+        patronList.subscribe("CancelTransaction", this);
+        patronList.subscribe("SearchPatronView", this);
+        patronList.findPatronsAtZipCode(zip);
+        patronList.createAndShowPatronCollectionView();
     }
 
     private void createAndShowLibrarianView() {
@@ -150,6 +166,19 @@ public class Librarian implements IView, IModel
 
         swapToView(currentScene);
 
+    }
+
+    private void createAndShowPatronSearchView() {
+        Scene currentScene = myViews.get("PatronSearchView");
+
+        if (currentScene == null) {
+            // create our initial view
+            View newView = ViewFactory.createView("PatronSearchView", this); // USE VIEW FACTORY
+            currentScene = new Scene(newView);
+            myViews.put("PatronSearchView", currentScene);
+        }
+
+        swapToView(currentScene);
     }
 
     /**

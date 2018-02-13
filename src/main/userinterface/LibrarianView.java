@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -56,13 +57,17 @@ public class LibrarianView extends View {
 
     // Create the label (Text) for the title of the screen
     private Node createTitle() {
+        HBox container = new HBox();
+        container.setAlignment(Pos.CENTER);
 
         Text titleText = new Text(" Brockport Library System ");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        titleText.setWrappingWidth(275);
         titleText.setTextAlignment(TextAlignment.CENTER);
-        titleText.setFill(Color.BLACK);
+        titleText.setFill(Color.DARKGREEN);
+        container.getChildren().add(titleText);
 
-        return titleText;
+        return container;
     }
 
     // Create the main form contents
@@ -105,7 +110,7 @@ public class LibrarianView extends View {
         Button searchPatrons = new Button("Search Patrons");
         searchPatrons.setOnAction(
                 // Lambda function call to stateChangeRequest
-                e -> myModel.stateChangeRequest("SearchPatrons", ""));
+                e -> myModel.stateChangeRequest("SearchPatronView", ""));
         searchPatrons.setMinWidth(grid.getPrefWidth());
         grid.add(searchPatrons, 0,3);
         GridPane.setHalignment(searchPatrons, HPos.CENTER);
@@ -135,8 +140,6 @@ public class LibrarianView extends View {
     // This method processes events generated from our GUI components.
     // Make the ActionListeners delegate to this method
     private void processAction(Event e) {
-//        this.e = e;
-        System.out.println("TellerView.actionPerformed() " + e);
         System.out.println(e.getTarget());
         clearErrorMessage();
 

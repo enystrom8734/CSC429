@@ -18,7 +18,15 @@ import impresario.ControlRegistry;
 import impresario.IControl;
 import impresario.IModel;
 import impresario.IView;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 // project imports
 
@@ -64,7 +72,6 @@ public abstract class View extends Group
 	{
 		myRegistry.unSubscribe(key, subscriber);
 	}
-	
-   	
+
 }
 

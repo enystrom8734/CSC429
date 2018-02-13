@@ -122,28 +122,33 @@ public class BookCollectionView extends View {
         tableOfBooks = new TableView<>();
         tableOfBooks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        TableColumn bookIdColumn = new TableColumn("BookId");
+        TableColumn bookIdColumn = new TableColumn("Book ID");
         bookIdColumn.setMinWidth(45);
+        bookIdColumn.setStyle("-fx-alignment: CENTER;");
         bookIdColumn.setCellValueFactory(
                 new PropertyValueFactory<BookTableModel, String>("bookId"));
 
         TableColumn authorColumn = new TableColumn("Author");
         authorColumn.setMinWidth(100);
+        authorColumn.setStyle("-fx-alignment: CENTER;");
         authorColumn.setCellValueFactory(
                 new PropertyValueFactory<BookTableModel, String>("author"));
 
         TableColumn titleColumn = new TableColumn("Title");
         titleColumn.setMinWidth(200);
+        titleColumn.setStyle("-fx-alignment: CENTER;");
         titleColumn.setCellValueFactory(
                 new PropertyValueFactory<BookTableModel, String>("title"));
 
         TableColumn pubYearColumn = new TableColumn("Publication\nYear");
         pubYearColumn.setMinWidth(100);
+        pubYearColumn.setStyle("-fx-alignment: CENTER;");
         pubYearColumn.setCellValueFactory(
                 new PropertyValueFactory<BookTableModel, String>("pubYear"));
 
         TableColumn statusColumn = new TableColumn("Status");
         statusColumn.setMinWidth(60);
+        statusColumn.setStyle("-fx-alignment: CENTER;");
         statusColumn.setCellValueFactory(
                 new PropertyValueFactory<BookTableModel, String>("status"));
 
@@ -155,9 +160,6 @@ public class BookCollectionView extends View {
                 processBookSelected();
             }
         });
-//        ScrollPane scrollPane = new ScrollPane();
-//        scrollPane.setPrefSize(115, 150);
-//        scrollPane.setContent(tableOfBooks);
 
         submitButton = new Button("Submit");
         submitButton.setOnAction(e -> {

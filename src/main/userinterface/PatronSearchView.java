@@ -9,7 +9,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,25 +19,22 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.util.Properties;
-import java.util.regex.Pattern;
-
 // project imports
 
 /**
  * The class containing the Account View  for the ATM application
  */
-public class BookSearchView extends View {
+public class PatronSearchView extends View {
 
     // GUI components
-    private TextField titleSearchField;
+    private TextField zipSearchField;
 
     // For showing error message
     private MessageView statusLog;
 
     // constructor for this class -- takes a model object
-    BookSearchView(IModel librarian) {
-        super(librarian, "BookSearchView");
+    PatronSearchView(IModel librarian) {
+        super(librarian, "PatronSearchView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -83,22 +79,22 @@ public class BookSearchView extends View {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 10, 25));
 
-        Text prompt = new Text("Enter book title to search for");
+        Text prompt = new Text("Enter patron ZIP code to search for");
         prompt.setWrappingWidth(200);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-        Text titleSearchLabel = new Text(" Title : ");
+        Text titleSearchLabel = new Text(" ZIP : ");
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
         titleSearchLabel.setFont(myFont);
         titleSearchLabel.setWrappingWidth(50);
         titleSearchLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(titleSearchLabel, 0, 1);
 
-        titleSearchField = new TextField();
-        titleSearchField.setOnAction(e -> processAction(e));
-        grid.add(titleSearchField, 1, 1);
+        zipSearchField = new TextField();
+        zipSearchField.setOnAction(this::processAction);
+        grid.add(zipSearchField, 1, 1);
 
         HBox doneCont = new HBox(100);
         doneCont.setAlignment(Pos.CENTER);
@@ -127,18 +123,17 @@ public class BookSearchView extends View {
         return statusLog;
     }
 
-    private void processAction(Event evt)
+    private void processAction(Event e)
     {
         clearErrorMessage();
-        String titleEntered = titleSearchField.getText();
+        String zipEntered = zipSearchField.getText();
 
-        if ((titleEntered == null) || (titleEntered.length() == 0)) {
-            displayErrorMessage("Please enter a title to search!");
-            titleSearchField.requestFocus();
+        if ((zipEntered == null) || (zipEntered.length() == 0)) {
+            displayErrorMessage("Please enter a ZIP to search!");
+            zipSearchField.requestFocus();
         } else {
-            myModel.stateChangeRequest("SearchBook", titleEntered);
+            myModel.stateChangeRequest("SearchPatrons", zipEntered);
         }
-
     }
 
     /**

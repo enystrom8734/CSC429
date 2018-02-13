@@ -5,6 +5,9 @@ package model;
 
 import exception.InvalidPrimaryKeyException;
 import impresario.IView;
+import javafx.scene.Scene;
+import userinterface.View;
+import userinterface.ViewFactory;
 
 import java.sql.SQLException;
 import java.util.Enumeration;
@@ -99,11 +102,17 @@ public class Patron extends EntityBase implements IView
 			}
 		}
 	}
+	public Patron() {
+		super(myTableName);
+		setDependencies();
+		persistentState = new Properties();
+	}
 
 	//-----------------------------------------------------------------------------------
 	private void setDependencies()
 	{
 		dependencies = new Properties();
+		dependencies.setProperty("CancelAddPatron", "CancelTransaction");
 
 		myRegistry.setDependencies(dependencies);
 	}
@@ -120,6 +129,9 @@ public class Patron extends EntityBase implements IView
 	//----------------------------------------------------------------
 	public void stateChangeRequest(String key, Object value)
 	{
+		if (key.equals("InsertPatron")) {
+			processNewPatron((Properties) value);
+		}
 
 		myRegistry.updateSubscribers(key, this);
 	}
@@ -169,7 +181,29 @@ public class Patron extends EntityBase implements IView
 			updateStatusMessage = "Error inserting patron data in database!";
 		}
 	}
+	protected void createAndShowPatronView()
+	{
+		// create our new view
+		View newView = ViewFactory.createView("PatronView", this);
+		Scene newScene = new Scene(newView);
 
+		// make the view visible by installing it into the frame
+		swapToView(newScene);
+	}
+
+	private void processNewPatron(Properties patronInfo) {
+		persistentState = new Properties();
+		Enumeration allKeys = patronInfo.propertyNames();
+		while (allKeys.hasMoreElements()) {
+			String nextKey = (String) allKeys.nextElement();
+			String nextValue = patronInfo.getProperty(nextKey);
+
+			if (nextValue != null) {
+				persistentState.setProperty(nextKey, nextValue);
+			}
+		}
+		updateStateInDatabase();
+	}
 
 	/**
 	 * This method is needed solely to enable the Patron information to be displayable in a table
